@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 
@@ -7,8 +7,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
   standalone: true,
   imports: [MatSidenavModule, ],
   templateUrl: './home.component.html',
-  styles: ``
 })
-export class HomeComponent {
+
+export class HomeComponent implements OnInit{
+  cols =3;
+  
+  ngOnInit(): void {
+
+  }
+
+  onColumnsCountChange(colsNum: number): void {
+    this.cols = colsNum;
+  }
 
 }
