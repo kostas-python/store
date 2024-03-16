@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
   
   })
   export class ProductsHeaderComponent implements OnInit{
+    categories = ['shoes','sports'];
    
     
     ngOnInit(): void {
