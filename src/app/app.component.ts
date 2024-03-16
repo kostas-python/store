@@ -13,6 +13,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HeaderComponent } from './components/header/header.component';
+
 
 
 
@@ -32,9 +34,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatTableModule, 
     MatBadgeModule, 
     MatSnackBarModule,
+    HeaderComponent,
   ],
   template: `
-    <h1>Welcome bla bla {{title}}!</h1>
+    <app-header></app-header>
 
     <router-outlet></router-outlet>
   `,
