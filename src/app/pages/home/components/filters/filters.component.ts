@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 
 
 @Component({
     selector: 'app-filters',
     standalone: true,
-    imports: [],
+    imports: [CommonModule],
     templateUrl: './filters.component.html' ,
   
   })

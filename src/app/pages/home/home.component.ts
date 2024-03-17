@@ -7,6 +7,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { FiltersComponent } from './components/filters/filters.component';
 import { ProductsHeaderComponent } from './components/products-header/products-header.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { CommonModule } from '@angular/common';
+import { Product } from '../../models/product.model';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
@@ -17,7 +19,7 @@ const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
   imports: [MatSidenavModule, MatToolbarModule, MatMenuModule, 
     MatIconModule, MatBadgeModule, FiltersComponent,ProductsHeaderComponent,
-    MatGridListModule,
+    MatGridListModule, CommonModule, 
  ],
   templateUrl: './home.component.html',
 })
@@ -26,6 +28,7 @@ export class HomeComponent implements OnInit{
   cols =3;
   rowHeight = ROWS_HEIGHT[this.cols];
   category: string | undefined;
+  products: Array<Product> | undefined;
   
   ngOnInit(): void {
 
