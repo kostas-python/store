@@ -9,6 +9,7 @@ import { ProductsHeaderComponent } from './components/products-header/products-h
 import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../models/product.model';
+import { CartService } from '../../services/cart.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
@@ -19,7 +20,7 @@ const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
   imports: [MatSidenavModule, MatToolbarModule, MatMenuModule, 
     MatIconModule, MatBadgeModule, FiltersComponent,ProductsHeaderComponent,
-    MatGridListModule, CommonModule, 
+    MatGridListModule, CommonModule, CartService
  ],
   templateUrl: './home.component.html',
 })
@@ -29,9 +30,19 @@ export class HomeComponent implements OnInit{
   rowHeight = ROWS_HEIGHT[this.cols];
   category: string | undefined;
   products: Array<Product> | undefined;
+  cartService: any;
   
   ngOnInit(): void {
 
+  }
+  onAddToCart(product: Product): void {
+    this.cartService.addToCart({
+      product: product.image,
+      name: product.title,
+      price: product.price,
+      quantity: 1,
+      id: product.id,
+    });
   }
 
   onColumnsCountChange(colsNum: number): void {
