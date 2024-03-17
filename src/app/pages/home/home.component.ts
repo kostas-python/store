@@ -1,41 +1,61 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatBadgeModule } from '@angular/material/badge';
-import { FiltersComponent } from './components/filters/filters.component';
-import { ProductsHeaderComponent } from './components/products-header/products-header.component';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { CommonModule } from '@angular/common';
-import { Product } from '../../models/product.model';
-import { CartService } from '../../services/cart.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Product } from 'src/app/models/product.model';
+import { CartService } from 'src/app/services/cart.service';
+import { StoreService } from 'src/app/services/store.service';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
-
 @Component({
   selector: 'app-home',
-  standalone: true,
-
-  imports: [MatSidenavModule, MatToolbarModule, MatMenuModule, 
-    MatIconModule, MatBadgeModule, FiltersComponent,ProductsHeaderComponent,
-    MatGridListModule, CommonModule, CartService
- ],
   templateUrl: './home.component.html',
 })
-
-export class HomeComponent implements OnInit{
-  cols =3;
-  rowHeight = ROWS_HEIGHT[this.cols];
-  category: string | undefined;
+export class HomeComponent implements OnInit, OnDestroy {
+  cols = 3;
+  rowHeight: number = ROWS_HEIGHT[this.cols];
   products: Array<Product> | undefined;
-  cartService: any;
-  
-  ngOnInit(): void {
+  count = '12';
+  sort = 'desc';
+  category: string | undefined;
+  productsSubscription: Subscription | undefined;
 
+  constructor(
+    private cartService: CartService,
+    private storeService: StoreService
+  ) {}
+
+  ngOnInit(): void {
+    this.getProducts();
   }
-  
+
+  onColumnsCountChange(colsNum: number): void {
+    this.cols = colsNum;
+    this.rowHeight = ROWS_HEIGHT[colsNum];
+  }
+
+  onItemsCountChange(count: number): void {
+    this.count = count.toString();
+    this.getProducts();
+  }
+
+  onSortChange(newSort: string): void {
+    this.sort = newSort;
+    this.getProducts();
+  }
+
+  onShowCategory(newCategory: string): void {
+    this.category = newCategory;
+    this.getProducts();
+  }
+
+  getProducts(): void {
+    this.productsSubscription = this.storeService
+      .getAllProducts(this.count, this.sort, this.category)
+      .subscribe((_products) => {
+        this.products = _products;
+      });
+  }
+
   onAddToCart(product: Product): void {
     this.cartService.addToCart({
       product: product.image,
@@ -46,13 +66,9 @@ export class HomeComponent implements OnInit{
     });
   }
 
-  onColumnsCountChange(colsNum: number): void {
-    this.cols = colsNum;
-    this.rowHeight = ROWS_HEIGHT[this.cols];
+  ngOnDestroy(): void {
+    if (this.productsSubscription) {
+      this.productsSubscription.unsubscribe();
+    }
   }
-
-  onShowCategory(newCategory: string): void {
-    this.category = newCategory;
-  }
-
 }
