@@ -35,17 +35,16 @@ export class CartComponent implements OnInit {
     'action',
   ];
   dataSource: CartItem[] = [];
+  cartSubscription: any;
   
 
   constructor(private cartService: CartService, private http: HttpClient) {}
 
   ngOnInit(): void {
-    
-      
-  }
-
-  onCheckout(): void {
-    
+    this.cartSubscription = this.cartService.cart.subscribe((_cart: Cart) => {
+      this.cart = _cart;
+      this.dataSource = _cart.items;
+    });
   }
 
   getTotal(items: CartItem[]): number {
@@ -68,8 +67,26 @@ export class CartComponent implements OnInit {
     this.cartService.clearCart();
   }
 
+  onCheckout(): void {
+    this.http
+      .post('http://localhost:4242/checkout', {
+        items: this.cart.items,
+      })
+      .subscribe(async (res: any) => {
+        let stripe = await loadStripe('your token');
+        stripe?.redirectToCheckout({
+          sessionId: res.id,
+        });
+      });
+  }
 
-
+  ngOnDestroy() {
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
+    }
+  }
 }
-
+function loadStripe(arg0: string) {
+  throw new Error('Function not implemented.');
+}
 
