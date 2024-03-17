@@ -1,15 +1,20 @@
-import { Component, onInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+
+
 
 @Component({
   selector: 'app-product-box',
   standalone: true,
-  imports: [],
+  imports: [MatIconModule, MatCardModule ],
   templateUrl: './product-isBoxedPrimitive.component.html' ,
 
 })
 
 
 export class ProductBoxComponent {
+  @Input() fullWidthMode = false;
 
   constructor() {}
 
