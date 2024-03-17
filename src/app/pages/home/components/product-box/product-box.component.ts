@@ -22,4 +22,8 @@ export class ProductBoxComponent {
 
   }
 
+  onAddToCart(): void {
+    
+  }
+
 }
