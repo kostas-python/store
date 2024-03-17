@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
 
   }
+  
   onAddToCart(product: Product): void {
     this.cartService.addToCart({
       product: product.image,
