@@ -4,22 +4,28 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
+import { FiltersComponent } from './components/filters/filters.component';
+import { ProductsHeaderComponent } from './components/products-header/products-header.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
-
-
+const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
+
   imports: [MatSidenavModule, MatToolbarModule, MatMenuModule, 
-    MatIconModule, MatBadgeModule, 
+    MatIconModule, MatBadgeModule, FiltersComponent,ProductsHeaderComponent,
+    MatGridListModule,
  ],
   templateUrl: './home.component.html',
 })
 
 export class HomeComponent implements OnInit{
   cols =3;
+  rowHeight = ROWS_HEIGHT[this.cols];
+  category: string | undefined;
   
   ngOnInit(): void {
 
@@ -27,6 +33,11 @@ export class HomeComponent implements OnInit{
 
   onColumnsCountChange(colsNum: number): void {
     this.cols = colsNum;
+    this.rowHeight = ROWS_HEIGHT[this.cols];
+  }
+
+  onShowCategory(newCategory: string): void {
+    this.category = newCategory;
   }
 
 }
