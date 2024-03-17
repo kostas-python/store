@@ -5,7 +5,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatSidenavModule, ],
+  imports: [MatSidenavModule,  ],
   templateUrl: './home.component.html',
 })
 

@@ -44,6 +44,7 @@ import { FiltersComponent } from './pages/home/components/filters/filters.compon
   ],
   template: `
     <app-header></app-header>
+    <app-products-header></app-products-header>
 
     <router-outlet></router-outlet>
   `,

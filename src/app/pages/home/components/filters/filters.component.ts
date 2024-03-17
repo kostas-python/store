@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './filters.component.html' ,
   
   })
-  export class ProductsHeaderComponent implements OnInit{
+  export class FiltersComponent implements OnInit{
     categories = ['shoes','sports'];
    
     
