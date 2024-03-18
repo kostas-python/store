@@ -1,4 +1,4 @@
-/*import { NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,7 +19,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
 import { ProductsHeaderComponent } from './pages/home/components/products-header/products-header.component';
 import { ProductBoxComponent } from './pages/home/components/product-box/product-box.component';
 import { FiltersComponent } from './pages/home/components/filters/filters.component';
@@ -27,7 +26,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CartService } from './services/cart.service';
 import { HttpClientModule } from '@angular/common/http';
-import { StoreService } from './services/store.service';
+import { StoreService } from './services/store.services';
 
 @NgModule({
   declarations: [
@@ -61,4 +60,4 @@ import { StoreService } from './services/store.service';
   providers: [CartService, StoreService],
   bootstrap: [AppComponent],
 })
-export class AppModule {} */
+export class AppModule {}
