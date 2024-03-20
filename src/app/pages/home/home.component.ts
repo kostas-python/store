@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, NgModule } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Product } from 'src/app/models/product.model';
-import { CartService } from 'src/app/services/cart.service';
-import { StoreService } from 'src/app/services/store.service';
+import { Product } from '../../models/product.model';
+import { CartService } from '../../services/cart.service';
+import { StoreService } from '../../services/store.services';
 
 const ROWS_HEIGHT: { [id: number]: number } = { 1: 400, 3: 335, 4: 350 };
+
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   sort = 'desc';
   category: string | undefined;
   productsSubscription: Subscription | undefined;
+
+  @Input() fullWidthMode: boolean = false;
 
   constructor(
     private cartService: CartService,

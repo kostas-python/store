@@ -1,13 +1,13 @@
 export interface Cart {
-    items: Array<CartItem>
+    items: Array<CartItem>;
 }
 
 
 
 export interface CartItem {
     product: string;
-    id:number;
     name: string;
-    price:number;
+    price: number;
     quantity: number;
-}
+    id: number;
+  }

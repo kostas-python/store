@@ -17,7 +17,7 @@
  <mat-drawer-content class="p-6">
    <app-products-header
      (columnsCountChange)="onColumnsCountChange($event)"
-     (itemsCountChange)="onItemsCountChange($event)"
+     (itemsCountChange)="onItemsCountChange($event.target.value)"
      (sortChange)="onSortChange($event)"
    ></app-products-header>
    <mat-grid-list
@@ -27,13 +27,21 @@
      [rowHeight]="rowHeight"
    >
      <mat-grid-tile *ngFor="let product of products">
-       <div
+      <mat-grid-tile *ngFor="let product of products">
+        <div
+          (click)="onAddToCart(product)"
+          app-product-box
+          [product]="product"
+          class="w-full"
+        ></div>
+      </mat-grid-tile>
+       <!--<div
          (addToCart)="onAddToCart($event)"
          app-product-box
          [product]="product"
          [fullWidthMode]="cols === 1"
          class="w-full"
-       ></div>
+       ></div>-->
      </mat-grid-tile>
    </mat-grid-list>
  </mat-drawer-content>
