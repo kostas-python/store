@@ -1,31 +1,36 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatListModule } from '@angular/material/list';
+import {Component, EventEmitter,OnDestroy,OnInit,Output } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { StoreService } from '../../../../services/store.services';
+
+
 
 
 @Component({
-    selector: 'app-filters',
-    standalone: true,
-    imports: [CommonModule,MatExpansionModule, MatListModule],
-    templateUrl: './filters.component.html' ,
-  
-  })
-  export class FiltersComponent implements OnInit{
-    @Output() showCategory = new EventEmitter<string>();
+  selector: 'app-filters',
+  templateUrl: './filters.component.html',
+})
+export class FiltersComponent implements OnInit, OnDestroy {
+  @Output() showCategory = new EventEmitter<string>();
+  categories: string[] | undefined;
+  categoriesSubscription: Subscription | undefined;
 
-    categories = ['shoes','sports'];
-   
-    
-    ngOnInit(): void {
-      
-    
+  constructor(private storeService: StoreService) {}
+
+  ngOnInit(): void {
+    this.categoriesSubscription = this.storeService
+      .getAllCategories()
+      .subscribe((response: Array<string>) => {
+        this.categories = response;
+      });
+  }
+
+  onShowCategory(category: string): void {
+    this.showCategory.next(category);
+  }
+
+  ngOnDestroy(): void {
+    if (this.categoriesSubscription) {
+      this.categoriesSubscription.unsubscribe();
     }
-
-    onShowCategory(category: string): void {
-      this.showCategory.emit(category);
-    }
-
-
-
+  }
 }
