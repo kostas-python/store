@@ -1,31 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Cart, CartItem } from '../../models/cart.model';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Cart, CartItem } from '../../models/cart.model';
 import { CartService } from '../../services/cart.service';
+
 
 
 @Component({
   selector: 'app-cart',
-  standalone: true,
-  imports: [CommonModule, 
-    MatCardModule, 
-    MatIconModule, 
-    MatTableModule, 
-    MatSortModule, 
-    MatPaginatorModule  ],
-
-  templateUrl: './cart.component.html' ,
-  styles: ``
+  templateUrl: './cart.component.html',
 })
-
-export class CartComponent implements OnInit {
-  cart: Cart = { items:[]};
+export class CartComponent implements OnInit, OnDestroy {
+  cart: Cart = { items: [] };
   displayedColumns: string[] = [
     'product',
     'name',
@@ -35,8 +21,7 @@ export class CartComponent implements OnInit {
     'action',
   ];
   dataSource: CartItem[] = [];
-  cartSubscription: any;
-  
+  cartSubscription: Subscription | undefined;
 
   constructor(private cartService: CartService, private http: HttpClient) {}
 
@@ -55,36 +40,36 @@ export class CartComponent implements OnInit {
     this.cartService.addToCart(item);
   }
 
-  onRemoveFromCart(item: CartItem): void {
-    this.cartService.removeFromCart(item);
-  }
+onRemoveFromCart(item: CartItem): void {
+  this.cartService.removeFromCart(item);
+}
 
-  onRemoveQuantity(item: CartItem): void {
-    this.cartService.removeQuantity(item);
-  }
+onRemoveQuantity(item: CartItem): void {
+  this.cartService.removeQuantity(item);
+}
 
-  onClearCart(): void {
-    this.cartService.clearCart();
-  }
+onClearCart(): void {
+  this.cartService.clearCart();
+}
 
-  onCheckout(): void {
-    this.http
-      .post('http://localhost:4242/checkout', {
-        items: this.cart.items,
-      })
-      .subscribe(async (res: any) => {
-        let stripe = await loadStripe('your token');
-        stripe?.redirectToCheckout({
-          sessionId: res.id,
-        });
+/* onCheckout(): void {
+  this.http
+    .post('http://localhost:4242/checkout', {
+      items: this.cart.items,
+    })
+    .subscribe(async (res: any) => {
+      let stripe = await loadStripe('your token');
+      stripe?.redirectToCheckout({
+        sessionId: res.id,
       });
-  }
+    });
+} */
 
-  ngOnDestroy() {
-    if (this.cartSubscription) {
-      this.cartSubscription.unsubscribe();
-    }
+ngOnDestroy() {
+  if (this.cartSubscription) {
+    this.cartSubscription.unsubscribe();
   }
+}
 }
 function loadStripe(arg0: string) {
   throw new Error('Function not implemented.');
