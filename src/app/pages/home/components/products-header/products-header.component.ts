@@ -1,29 +1,17 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-products-header',
-  standalone: true,
-  imports: [MatSidenavModule,MatButtonModule, MatMenuModule, 
-    MatIconModule, 
-    MatCardModule],
-  templateUrl: './products-header.component.html' ,
-
+  templateUrl: './products-header.component.html',
 })
 export class ProductsHeaderComponent {
   @Output() columnsCountChange = new EventEmitter<number>();
   @Output() itemsCountChange = new EventEmitter<number>();
   @Output() sortChange = new EventEmitter<string>();
-  sort='desc';
   itemsShowCount = 12;
-  
+  sort = 'desc';
+
   constructor() {}
-
-
 
   onColumnsUpdated(colsNum: number): void {
     this.columnsCountChange.emit(colsNum);
@@ -38,5 +26,4 @@ export class ProductsHeaderComponent {
     this.sortChange.emit(newSort);
     this.sort = newSort;
   }
-
 }
